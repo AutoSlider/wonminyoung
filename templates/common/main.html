@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+</head>
+    <body>
+        {% extends 'base.html' %}
+        {% block content %}
+<!-- 로고 -->
+        <div id ="logo_div" class="logo">
+            <img id="logo_img" src="../static/logo3.png" class="img-fluid">
+        </div>
+
+<!-- 아이디, 비밀번호 입력란, 로그인 버튼 -->
+        <form action="{% url 'common:login' %}" method="POST">
+            {% csrf_token %}
+            {% include "form_errors.html" %}
+            <div id="id_div" class="input-group mb-3">
+                <span id="id_span" class="input-group-text">아이디</span>
+                <input type="text" name="username" class="form-control" placeholder="아이디 입력">
+            </div>
+            <div id="password_div" class="input-group mb-3">
+                <span class="input-group-text">비밀번호</span>
+                <input type="password"  name="password" class="form-control" placeholder="비밀번호 입력">
+            </div>
+            <div id="login_div">
+                <button id="login_button" type="submit" class="btn btn-success btn-lg">로그인</button>
+            </div>
+        </form>
+
+<!-- 회원가입 버튼 -->
+        {% if user.is_authenticated %}
+        {% else %}
+        <div id="signup_div">
+            <a href="{% url 'common:signup' %}">
+                <button id="signup_button" type="submit" class="btn btn-warning btn-lg">회원가입</button>
+            </a>
+        </div>
+        {% endif %}
+
+<!-- 게시판 버튼 -->
+        {% if user.is_authenticated %}
+        <div id="board_div" class="dropdown">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            메뉴
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'pybo:pybo' %}">게시판</a></li>
+                <li><a class="dropdown-item" href="#">마이페이지</a></li>
+                <li><a class="dropdown-item" href="#">요약페이지</a></li>
+            </ul>
+        </div>
+        {% endif %}
+
+<!-- 푸터 -->
+        <br>
+        <div id="footer_div">
+        <hr>
+        <div class="footer_wrap" style="text-align:center;">
+            <img src="/static/andlogo.jpg" alt="logoimage">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <B style = "font-size:16px">CONTACT US&nbsp;&nbsp;&nbsp;</B>
+            <i class="bi bi-telephone-fill"></i> 전화번호: 02-599-8697 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <i class="bi bi-house-door-fill"></i> 관리자 이메일: autoslider@site.com
+        </div>
+    <br>
+    <p align="center"> Copyright ⓒ2023 And.&nbsp;All Rights Reserved. </p>
+        </div>
+        {% endblock %}
+</body>
+</html>
